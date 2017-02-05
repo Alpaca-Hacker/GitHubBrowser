@@ -1,0 +1,59 @@
+﻿@model GitHubBrowser.Models.UserProfile
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h2>Github Browser</h2>
+    <div class="lead">
+        <p>Just enter the username below.</p>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        <fieldset>
+
+            <label>Username:</label>
+            <div>
+                @Html.TextBoxFor(model => model.Login)
+            </div>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Search">
+            </div>
+        </fieldset>
+    }
+</div>
+@if (Model != null && Model.Login != null)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h2>
+                @if (Model.Avatar_Url != null)
+                {
+                    <img src="@Model.Avatar_Url" alt="Avatar" height="130" width="130"/>
+                }
+                @Model.Login @(string.IsNullOrEmpty(Model.Name) ? "" : "- " + @Model.Name)
+            </h2>
+            <h4 class="text-center">@Model.Location</h4>
+        </div>
+        @if (Model.Repos != null && Model.Repos.Count > 0)
+        {
+            <div class="panel-body text-center">
+                <h2>Top Repos</h2>
+                @foreach (var repo in Model.Repos)
+                {
+                    <p>
+                        @repo.Name
+                    </p>
+                }
+            </div>
+        }
+    </div>
+}
+
+
